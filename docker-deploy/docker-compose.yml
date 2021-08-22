@@ -79,6 +79,7 @@ services:
       - CERTBOT_EMAIL=$CERTBOT_EMAIL
       - DOMAIN_LIST=$DOMAIN_LIST
       - DOMAIN=$DOMAIN
+      - DOMAIN_MAUTIC=$DOMAIN_MAUTIC
     volumes:
       - "./frontend/config/letsencrypt:/etc/letsencrypt"
       - "./frontend/config/nginx:/etc/nginx/conf.d"
@@ -88,9 +89,31 @@ services:
     ports: 
       - '$IP:443:443'
       - '$IP:80:80'
+    depends_on:
+      - vaccom-mautic
     networks:
         vaccom:
           ipv4_address: 20.0.0.5
+
+  vaccom-mautic:
+    image: mautic/mautic:latest
+    container_name: vaccom-mautic
+    links:
+      - vaccom-mariadb:mysql
+    depends_on:
+      - vaccom-mariadb
+    volumes:
+      - ./mautic_data:/var/www/html
+    environment:
+      - MAUTIC_DB_HOST=$MAUTIC_DB_HOST
+      - MYSQL_PORT_3306_TCP=$MYSQL_PORT_3306_TCP
+      - MAUTIC_DB_USER=$MAUTIC_DB_USER
+      - MAUTIC_DB_PASSWORD=$MAUTIC_DB_PASSWORD
+      - MAUTIC_DB_NAME=$MAUTIC_DB_NAME
+      - MAUTIC_RUN_CRON_JOBS=$MAUTIC_RUN_CRON_JOBS
+    networks:
+        vaccom:
+          ipv4_address: 20.0.0.6
 
 networks:
   vaccom:

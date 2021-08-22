@@ -39,6 +39,9 @@ server {
 	error_log /var/log/nginx/$DOMAIN-error.log;
 }
 EOF
+mv /opt/mautic-vaccom.conf /etc/nginx/conf.d/
+sed -i "s|DOMAIN_MAUTIC|$DOMAIN_MAUTIC|g" /etc/nginx/conf.d/mautic-vaccom.conf
+/usr/sbin/cron -n &
 else
 /usr/sbin/cron -n &
 fi
