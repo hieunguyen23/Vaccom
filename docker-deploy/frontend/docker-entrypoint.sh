@@ -41,7 +41,7 @@ server {
 EOF
 mv /opt/mautic-vaccom.conf /etc/nginx/conf.d/
 sed -i "s|DOMAIN_MAUTIC|$DOMAIN_MAUTIC|g" /etc/nginx/conf.d/mautic-vaccom.conf
-sed -i "s|DOMAIN_MAUTIC|$DOMAIN|g" /etc/nginx/conf.d/mautic-vaccom.conf
+sed -i "s|DOMAIN_SSL|$DOMAIN|g" /etc/nginx/conf.d/mautic-vaccom.conf
 
 /usr/sbin/cron -n &
 else
