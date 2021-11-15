@@ -91,6 +91,7 @@ services:
       - CERTBOT_EMAIL=$CERTBOT_EMAIL
       - DOMAIN_LIST=$DOMAIN_LIST
       - DOMAIN=$DOMAIN
+      - DOMAIN_LIST2=$DOMAIN_LIST2
     volumes:
       - "./frontend/config/letsencrypt:/etc/letsencrypt"
       - "./frontend/config/nginx:/etc/nginx/conf.d"
