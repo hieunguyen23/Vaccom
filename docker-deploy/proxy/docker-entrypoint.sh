@@ -20,11 +20,11 @@ sed -i "s|#PermitRootLogin prohibit-password|PermitRootLogin yes|" /etc/ssh/sshd
 ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -P ""
 
 # Create month cron to update ssl
-cat > /etc/cron.monthly/update_ssl <<EOF
+cat > /etc/cron.weekly/update_ssl <<EOF
 #!/bin/bash
 # sync certificate from container vaccom-frontend.
-scp root@vaccom-frontend:/etc/letsencrypt/archive/$DOMAIN/fullchain1.pem /etc/nginx/ssl/fullchain.pem
-scp root@vaccom-frontend:/etc/letsencrypt/archive/$DOMAIN/privkey1.pem /etc/nginx/ssl/privkey.pem
+scp root@vaccom-frontend:/etc/letsencrypt/live/$DOMAIN/fullchain.pem /etc/nginx/ssl/fullchain.pem
+scp root@vaccom-frontend:/etc/letsencrypt/live/$DOMAIN/privkey.pem /etc/nginx/ssl/privkey.pem
 
 #reload nginx.
 nginx -s reload

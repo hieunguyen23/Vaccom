@@ -8,7 +8,7 @@ if [ ! -f "$FILE" ]; then
 wget https://raw.githubusercontent.com/certbot/certbot/7f0fa18c570942238a7de73ed99945c3710408b4/letsencrypt-auto-source/letsencrypt-auto -O /usr/sbin/certbot-auto
 chmod +x /usr/sbin/certbot-auto
 /usr/sbin/certbot-auto certonly --nginx --agree-tos -m "$CERTBOT_EMAIL" -n -d $DOMAIN_LIST
-
+/usr/sbin/certbot-auto certonly --nginx --agree-tos -m "$CERTBOT_EMAIL" -n -d $DOMAIN_LIST2
 cat > /etc/cron.daily/letsencrypt-renew <<EOF
 #!/bin/bash
 
@@ -18,7 +18,8 @@ EOF
 
 mv /opt/default.conf /etc/nginx/conf.d/default.conf
 sed -i "s|DOMAIN|$DOMAIN|g" /etc/nginx/conf.d/default.conf
-
+mv /opt/bcdpcd.conf /etc/nginx/conf.d/bcdpcd.conf
+sed -i "s|DOMAIN2|$DOMAIN_LIST2|g" /etc/nginx/conf.d/bcdpcd.conf
 cat > /opt/change_root_password.txt <<EOF
 $CONTAINER_ROOT_PASSWORD
 $CONTAINER_ROOT_PASSWORD

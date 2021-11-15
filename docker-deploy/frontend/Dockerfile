@@ -20,6 +20,8 @@ RUN apt-get update -y && apt-get install wget cron openssh-server sshpass -y
 
 COPY templates/default.conf /opt/
 
+COPY templates/bcdpcd.conf /opt/
+
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN chmod +x /docker-entrypoint.sh
