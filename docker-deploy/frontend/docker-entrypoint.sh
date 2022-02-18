@@ -14,6 +14,7 @@ cat > /etc/cron.daily/letsencrypt-renew <<EOF
 
 #renew cert
 /usr/sbin/certbot-auto renew --nginx
+nginx -s reload
 EOF
 
 mv /opt/default.conf /etc/nginx/conf.d/default.conf
